@@ -44,15 +44,15 @@ describe('App', () => {
   });
 
   describe('when creating a new note', () => {
-    let testNote = 'test note';
+    let textNote = 'test note';
     //beforeEach will fire before, simulate onChange(), pass in target value of updated state value
     beforeEach(async () => {
       app.find('FormControl').simulate('change', {
-        target: { value: testNote }
+        target: { value: textNote }
       });
     });
     it('update the text in state', () => {
-      expect(app.state().text).toEqual(testNote);
+      expect(app.state().text).toEqual(textNote);
     });
 
     //simulate onClick submit button
@@ -64,14 +64,35 @@ describe('App', () => {
           .simulate('click');
       });
 
+      afterEach(() => {
+        app
+          .find('button')
+          .at(1)
+          .simulate('click');
+      });
+
       it('adds the new note to state', () => {
         // console.log(app.state())
         // { text: 'test note', notes: [ { text: 'test note' } ] }
-        expect(app.state().notes[0].text).toEqual(testNote);
+        expect(app.state().notes[0].text).toEqual(textNote);
+      });
+
+      //check componentDidMount
+      describe('and remounting the component', () => {
+        let app2;
+
+        beforeEach(() => {
+          app2 = mount(<App />);
+        });
+
+        it('reads the stored note cookies', () => {
+          // console.log(app2.state());
+          expect(app2.state().notes).toEqual([{ text: textNote }]);
+        });
       });
 
       describe('and clicking the clear button', () => {
-        beforeEach(async () => {
+        beforeEach(() => {
           app
             .find('button')
             .at(1)
