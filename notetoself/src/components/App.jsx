@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import { Form, FormControl, Button } from 'react-bootstrap';
+
 
 class App extends Component {
   render() {
     return (
       <div>
         <h2>Note to Self</h2>
+        <Form>
+          <FormControl/>
+          <Button>Sumbit</Button>
+        </Form>
       </div>
     );
   }
 }
-
-export const color = 'red';
-export const number = 999;
 
 export default App;
