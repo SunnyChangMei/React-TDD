@@ -42,4 +42,46 @@ describe('App', () => {
       ).toEqual('Submit');
     });
   });
+
+  describe('when creating a new note', () => {
+    let testNote = 'test note';
+    //beforeEach will fire before, simulate onChange(), pass in target value of updated state value
+    beforeEach(async () => {
+      app.find('FormControl').simulate('change', {
+        target: { value: testNote }
+      });
+    });
+    it('update the text in state', () => {
+      expect(app.state().text).toEqual(testNote);
+    });
+
+    //simulate onClick submit button
+    describe('and submitting the new note', () => {
+      beforeEach(() => {
+        app
+          .find('button')
+          .at(0)
+          .simulate('click');
+      });
+
+      it('adds the new note to state', () => {
+        // console.log(app.state())
+        // { text: 'test note', notes: [ { text: 'test note' } ] }
+        expect(app.state().notes[0].text).toEqual(testNote);
+      });
+
+      describe('and clicking the clear button', () => {
+        beforeEach(async () => {
+          app
+            .find('button')
+            .at(1)
+            .simulate('click');
+        });
+
+        it('clears all notes in state', () => {
+          expect(app.state().notes).toEqual([]);
+        });
+      });
+    });
+  });
 });
