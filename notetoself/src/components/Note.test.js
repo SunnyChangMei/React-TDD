@@ -12,7 +12,7 @@ describe('Note', () => {
   // copy all its properties of the object
   let note = mount(<Note {...props} />);
   it('reader the note text', () => {
-    console.log(note.debug());
+    // console.log(note.debug());w
     // always want to test props.note.text by default
     expect(note.find('p').text()).toEqual(props.note.text);
   });
